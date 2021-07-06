@@ -1,15 +1,13 @@
-package com.spmart.server.product.entity;
+package com.spmart.server.product.domain;
 
 import com.spmart.server.common.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -21,8 +19,12 @@ public class Category extends BaseTimeEntity {
 
     private String name;
 
+    @OneToMany(mappedBy = "category")
+    private List<Product> products = new ArrayList<>();
+
     @Builder
-    public Category(String name) {
+    public Category(String name, List<Product> products) {
         this.name = name;
+        this.products = products;
     }
 }

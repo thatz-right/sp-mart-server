@@ -1,10 +1,9 @@
-package com.spmart.server.product.entity;
+package com.spmart.server.product.domain;
 
 import com.spmart.server.common.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;

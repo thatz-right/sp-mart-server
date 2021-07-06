@@ -1,4 +1,4 @@
-package com.spmart.server.product.entity;
+package com.spmart.server.product.domain;
 
 import com.spmart.server.common.BaseTimeEntity;
 import lombok.Builder;
@@ -28,7 +28,7 @@ public class ProductOption extends BaseTimeEntity {
     private Product product;
 
     @Builder
-    public ProductOption( String name, List<OptionValue> values) {
+    public ProductOption(String name, List<OptionValue> values) {
         this.name = name;
         this.values = values;
     }

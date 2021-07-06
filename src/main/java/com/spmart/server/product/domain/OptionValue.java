@@ -1,4 +1,4 @@
-package com.spmart.server.product.entity;
+package com.spmart.server.product.domain;
 
 import com.spmart.server.common.BaseTimeEntity;
 import lombok.Builder;
