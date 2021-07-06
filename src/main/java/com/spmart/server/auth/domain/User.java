@@ -1,6 +1,5 @@
-package com.spmart.server.auth.entity;
+package com.spmart.server.auth.domain;
 
-import com.spmart.server.auth.dto.Role;
 import com.spmart.server.common.BaseTimeEntity;
 import lombok.Builder;
 import lombok.NoArgsConstructor;

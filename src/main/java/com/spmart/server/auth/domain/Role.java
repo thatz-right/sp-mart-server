@@ -1,4 +1,4 @@
-package com.spmart.server.auth.dto;
+package com.spmart.server.auth.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
