@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
@@ -19,6 +18,8 @@ public class User extends BaseTimeEntity {
     private String phone;
     private String name;
     private String address;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder

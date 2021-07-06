@@ -1,12 +1,11 @@
 package com.spmart.server.product;
 
-import com.spmart.server.product.entity.Category;
-import com.spmart.server.product.entity.OptionValue;
-import com.spmart.server.product.entity.Product;
-import com.spmart.server.product.entity.ProductOption;
+import com.spmart.server.product.domain.Category;
+import com.spmart.server.product.domain.OptionValue;
+import com.spmart.server.product.domain.Product;
+import com.spmart.server.product.domain.ProductOption;
 import com.spmart.server.product.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ class ProductTest {
     @DisplayName("제품 생성")
     public void addProductTest() {
         Category category = Category.builder()
-                .name("카테로기")
+                .name("카테고리")
                 .build();
 
         OptionValue sizeL = OptionValue.builder()
