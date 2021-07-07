@@ -1,6 +1,7 @@
 package com.spmart.server.product.domain;
 
 import com.spmart.server.common.BaseTimeEntity;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,14 +16,15 @@ import javax.persistence.Id;
 @Entity
 public class OptionValue extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String value;
+	private String value;
 
-    @Builder
-    public OptionValue(String value) {
-        this.value = value;
-    }
+	@Builder
+	public OptionValue(Long id, String value) {
+		this.id = id;
+		this.value = value;
+	}
 }
