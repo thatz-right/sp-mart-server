@@ -20,11 +20,14 @@ public class OptionValue extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String value;
+	private String name;
+
+	private int extraPrice;
 
 	@Builder
-	public OptionValue(Long id, String value) {
+	public OptionValue(Long id, String name, int extraPrice) {
 		this.id = id;
-		this.value = value;
+		this.name = name;
+		this.extraPrice = extraPrice;
 	}
 }

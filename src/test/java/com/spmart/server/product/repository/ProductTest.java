@@ -28,15 +28,18 @@ class ProductTest {
 			.build();
 
 		OptionValue sizeL = OptionValue.builder()
-			.value("L")
+			.name("L")
+			.extraPrice(0)
 			.build();
 
 		OptionValue sizeM = OptionValue.builder()
-			.value("M")
+			.name("M")
+			.extraPrice(0)
 			.build();
 
 		OptionValue sizeS = OptionValue.builder()
-			.value("S")
+			.name("S")
+			.extraPrice(0)
 			.build();
 
 		ProductOption productOption = ProductOption.builder()
