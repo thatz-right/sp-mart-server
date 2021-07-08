@@ -26,7 +26,7 @@ public class Order extends BaseTimeEntity {
 	private User user;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<OrderProduct> orderProducts = new ArrayList<>();
+	private List<OrderProduct> orderProducts;
 
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
@@ -35,7 +35,7 @@ public class Order extends BaseTimeEntity {
 	public Order(Long id, User user, List<OrderProduct> orderProducts, OrderStatus orderStatus) {
 		this.id = id;
 		this.user = user;
-		this.orderProducts = orderProducts;
+		this.orderProducts = orderProducts != null ? orderProducts : new ArrayList<>();
 		this.orderStatus = orderStatus != null ? orderStatus : OrderStatus.PAYED;
 	}
 }
