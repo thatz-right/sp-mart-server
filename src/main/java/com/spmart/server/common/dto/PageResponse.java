@@ -15,16 +15,16 @@ public class PageResponse<T> {
 
 	private List<T> contents = new ArrayList<>();
 
-	private Integer page;
+	private Integer pageNumber;
 
 	private Integer pageSize;
 
 	private Integer totalPages;
 
 	@Builder
-	public PageResponse(List<T> contents, Integer page, Integer pageSize, Integer totalPages) {
+	public PageResponse(List<T> contents, Integer pageNumber, Integer pageSize, Integer totalPages) {
 		this.contents = contents;
-		this.page = page;
+		this.pageNumber = pageNumber;
 		this.pageSize = pageSize;
 		this.totalPages = totalPages;
 	}

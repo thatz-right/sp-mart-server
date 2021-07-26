@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RestController("/products")
 public class ProductController {
 
-	private final ProductService productService;
+	// private final ProductService productService;
 
 	@GetMapping("/{categoryId}")
 	public ResponseEntity<PageResponse> getProductList(@PathVariable Long categoryId) {

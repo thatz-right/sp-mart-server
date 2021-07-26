@@ -2,19 +2,21 @@ package com.spmart.server.product.service;
 
 import org.springframework.stereotype.Service;
 
+import com.spmart.server.common.dto.PageDto;
 import com.spmart.server.common.dto.PageResponse;
 import com.spmart.server.product.dto.ProductCard;
 import com.spmart.server.product.dto.ProductDetail;
 import com.spmart.server.product.dto.ProductRequest;
 
+@Service
 public interface ProductService {
-	PageResponse<ProductCard> findProductCardListByCategoryId(); // 상품정보 리스트, pageable;
+	PageResponse<ProductCard> getProductCardList(Long categoryId, PageDto pageDto);
 
-	ProductDetail findProductDetail(Long productId);
+	ProductDetail getProductDetail(Long productId);
 
-	boolean registProduct(ProductRequest productRequest);
+	void registProduct(ProductRequest productRequest);
 
-	boolean updateProduct(ProductRequest productRequest);
+	void updateProduct(ProductRequest productRequest);
 
-	boolean removeProduct(Long productId);
+	void removeProduct(Long productId);
 }

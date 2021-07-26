@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,7 @@ public class Product extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(unique = true)
 	private String code;
 
 	private String name;
@@ -44,15 +46,21 @@ public class Product extends BaseTimeEntity {
 	private boolean isStock;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<ProductOption> options;
+	private List<ProductOption> options = new ArrayList<>();
 
 	private int discountPrice;
 
 	private int price;
 
+	public void addProductOption(ProductOption productOption) {
+		options.add(productOption);
+		productOption.setProduct(this);
+	}
+
 	@Builder
-	public Product(Long id, String code, String name, String description, String image, CategoryItem categoryItem, boolean isDisplay,
-		boolean isStock, List<ProductOption> options, int discountPrice, int price) {
+	public Product(Long id, String code, String name, String description, String image, CategoryItem categoryItem,
+		boolean isDisplay,
+		boolean isStock, int discountPrice, int price) {
 		this.id = id;
 		this.code = code;
 		this.name = name;
@@ -61,8 +69,23 @@ public class Product extends BaseTimeEntity {
 		this.categoryItem = categoryItem;
 		this.isDisplay = isDisplay;
 		this.isStock = isStock;
-		this.options = options != null ? options : new ArrayList<>();
 		this.discountPrice = discountPrice;
 		this.price = price;
+	}
+
+	public void update(Product product) {
+		this.code = product.getCode();
+		this.name = product.getName();
+		this.description = product.getDescription();
+		this.image = product.getImage();
+		this.categoryItem = product.getCategoryItem();
+
+		this.options.clear();
+		this.options.addAll(product.getOptions());
+
+		this.isDisplay = product.isDisplay();
+		this.isStock = product.isStock();
+		this.discountPrice = product.getDiscountPrice();
+		this.price = product.getPrice();
 	}
 }

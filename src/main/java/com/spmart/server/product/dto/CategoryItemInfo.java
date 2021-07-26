@@ -11,10 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProductCard {
-	private Long id;
+public class CategoryItemInfo {
 	private String name;
-	private String code;
-	private String image;
-	private int discountPrice;
+	private CategoryInfo category;
 }
