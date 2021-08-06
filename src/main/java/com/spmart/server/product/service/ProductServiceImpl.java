@@ -1,6 +1,5 @@
 package com.spmart.server.product.service;
 
-import com.spmart.server.common.dto.PageDto;
 import com.spmart.server.common.dto.PageResponse;
 import com.spmart.server.product.domain.Product;
 import com.spmart.server.product.dto.ProductCard;
@@ -11,18 +10,23 @@ import com.spmart.server.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    private final static int PAGE_SIZE = 20;
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
 
-    public PageResponse<ProductCard> getProductCardList(Long categoryItemId, PageDto pageDto) {
-        Page<ProductCard> pageInfo = productRepository.findAllByCategoryId(categoryItemId, pageDto.of())
+    public PageResponse<ProductCard> getProductCardList(Long categoryItemId, int pageNum) {
+        Pageable pageable = PageRequest.of(pageNum, PAGE_SIZE);
+
+        Page<ProductCard> pageInfo = productRepository.findAllByCategoryId(categoryItemId, pageable)
                 .map(product -> modelMapper.map(product, ProductCard.class));
 
         return PageResponse.<ProductCard>builder()

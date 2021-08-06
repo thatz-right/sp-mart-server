@@ -23,7 +23,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.spmart.server.common.dto.PageDto;
 import com.spmart.server.common.dto.PageResponse;
 import com.spmart.server.product.domain.Category;
 import com.spmart.server.product.domain.OptionValue;
@@ -86,8 +85,7 @@ class ProductServiceTest {
 				Arrays.asList(product1, product2),
 				PageRequest.of(1, 2), 3));
 
-		PageDto pageDto = new PageDto(1, 2, 0);
-		PageResponse<ProductCard> response = productService.getProductCardList(1L, pageDto);
+		PageResponse<ProductCard> response = productService.getProductCardList(1L, 1);
 
 		verify(productRepository).findAllByCategoryId(eq(1L), Mockito.any(Pageable.class));
 
