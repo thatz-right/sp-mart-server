@@ -1,12 +1,6 @@
 package com.spmart.server.product.repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
-
+import com.spmart.server.product.domain.Category;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.spmart.server.product.domain.CategoryItem;
 import com.spmart.server.product.domain.OptionValue;
 import com.spmart.server.product.domain.Product;
 import com.spmart.server.product.domain.ProductOption;
-import com.spmart.server.product.dto.ProductRequest;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -34,16 +26,16 @@ class ProductTest {
 	OptionValueRepository optionValueRepository;
 
 	@Autowired
-	CategoryItemRepository categoryItemRepository;
+	CategoryRepository categoryRepository;
 
 	@Test
 	@DisplayName("상품 생성")
 	public void addProductTest() {
-		CategoryItem categoryItem = CategoryItem.builder()
+		Category categoryItem = Category.builder()
 			.name("카테고리 이름")
 			.build();
 
-		categoryItemRepository.save(categoryItem);
+		categoryRepository.save(categoryItem);
 
 		OptionValue sizeL = OptionValue.builder()
 			.name("L")
@@ -68,7 +60,7 @@ class ProductTest {
 			.code("남405-2")
 			.name("원목 니켈스카시상패")
 			.image("asdfdsa")
-			.categoryItem(categoryItem) // fk
+			.category(categoryItem) // fk
 			.isDisplay(true)
 			.isStock(true)
 			.price(10000)
@@ -101,11 +93,11 @@ class ProductTest {
 	@Test
 	@DisplayName("상품 업데이트 테스트")
 	public void updateProductTest() {
-		CategoryItem categoryItem = CategoryItem.builder()
+		Category categoryItem = Category.builder()
 			.name("카테고리 이름")
 			.build();
 
-		categoryItemRepository.save(categoryItem);
+		categoryRepository.save(categoryItem);
 
 		OptionValue sizeL = OptionValue.builder()
 			.name("L")
@@ -130,7 +122,7 @@ class ProductTest {
 			.code("남405-2")
 			.name("원목 니켈스카시상패")
 			.image("asdfdsa")
-			.categoryItem(categoryItem)
+			.category(categoryItem)
 			.isDisplay(true)
 			.isStock(true)
 			.price(10000)
@@ -149,7 +141,7 @@ class ProductTest {
 			.code("남405-2")
 			.name("new 이름")
 			.image("new 이미지")
-			.categoryItem(categoryItem)
+			.category(categoryItem)
 			.isDisplay(true)
 			.isStock(true)
 			.price(15000)
@@ -173,11 +165,11 @@ class ProductTest {
 	@Test
 	@DisplayName("상품 제거")
 	public void removeProductTest() {
-		CategoryItem categoryItem = CategoryItem.builder()
+		Category categoryItem = Category.builder()
 			.name("카테고리 이름")
 			.build();
 
-		categoryItemRepository.save(categoryItem);
+		categoryRepository.save(categoryItem);
 
 		OptionValue sizeL = OptionValue.builder()
 			.name("L")
@@ -202,7 +194,7 @@ class ProductTest {
 			.code("남405-2")
 			.name("원목 니켈스카시상패")
 			.image("asdfdsa")
-			.categoryItem(categoryItem) // fk
+			.category(categoryItem) // fk
 			.isDisplay(true)
 			.isStock(true)
 			.price(10000)
@@ -226,7 +218,7 @@ class ProductTest {
 		boolean isExistProduct = productRepository.existsById(savedProduct.getId());
 		boolean isExistOption = productOptionRepository.existsById(optionId);
 		boolean isExistOptionValue = optionValueRepository.existsById(optionValue1Id);
-		boolean isExistCategoryItem = categoryItemRepository.existsById(categoryItem.getId());
+		boolean isExistCategoryItem = categoryRepository.existsById(categoryItem.getId());
 
 		Assertions.assertThat(isExistProduct).isFalse();
 		Assertions.assertThat(isExistOption).isFalse();

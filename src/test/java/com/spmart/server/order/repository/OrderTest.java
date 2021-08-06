@@ -3,6 +3,7 @@ package com.spmart.server.order.repository;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.spmart.server.product.domain.Category;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ import com.spmart.server.auth.domain.User;
 import com.spmart.server.auth.repository.UserRepository;
 import com.spmart.server.order.domain.Order;
 import com.spmart.server.order.domain.OrderProduct;
-import com.spmart.server.product.domain.CategoryItem;
 import com.spmart.server.product.domain.Product;
 
 @DataJpaTest
@@ -30,13 +30,10 @@ class OrderTest {
 	@Autowired
 	OrderRepository orderRepository;
 
-	// @PersistenceContext
-	// EntityManager entityManager;
-
 	@Test
 	@DisplayName("Order 생성")
 	public void OrderCreate() {
-		CategoryItem categoryItem = CategoryItem.builder()
+		Category categoryItem = Category.builder()
 			.name("카테고리")
 			.build();
 
@@ -44,7 +41,7 @@ class OrderTest {
 			.code("남405-2")
 			.name("원목 니켈스카시상패")
 			.image("asdfdsa")
-			.categoryItem(categoryItem) // fk
+			.category(categoryItem) // fk
 			.isDisplay(true)
 			.isStock(true)
 			.price(10000)
@@ -55,7 +52,7 @@ class OrderTest {
 			.code("남405-3")
 			.name("하이후에")
 			.image("asdfdsa")
-			.categoryItem(categoryItem) // fk
+			.category(categoryItem) // fk
 			.isDisplay(true)
 			.isStock(true)
 			.price(10000)

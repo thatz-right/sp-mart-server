@@ -21,9 +21,17 @@ public class Category extends BaseTimeEntity {
 
 	private String name;
 
+	@ManyToOne
+	@JoinColumn(name="parent_id")
+	private Category parent;
+
+	@OneToMany(mappedBy = "parent")
+	private List<Category> children = new ArrayList<>();
+
 	@Builder
-	public Category(Long id, String name) {
+	public Category(Long id, String name, Category parent) {
 		this.id = id;
 		this.name = name;
+		this.parent = parent;
 	}
 }

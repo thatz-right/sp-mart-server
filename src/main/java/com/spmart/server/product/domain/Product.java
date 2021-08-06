@@ -38,8 +38,8 @@ public class Product extends BaseTimeEntity {
 	private String image;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_item_id")
-	private CategoryItem categoryItem;
+	@JoinColumn(name = "category_id")
+	private Category category;
 
 	private boolean isDisplay;
 
@@ -58,7 +58,7 @@ public class Product extends BaseTimeEntity {
 	}
 
 	@Builder
-	public Product(Long id, String code, String name, String description, String image, CategoryItem categoryItem,
+	public Product(Long id, String code, String name, String description, String image, Category category,
 		boolean isDisplay,
 		boolean isStock, int discountPrice, int price) {
 		this.id = id;
@@ -66,7 +66,7 @@ public class Product extends BaseTimeEntity {
 		this.name = name;
 		this.description = description;
 		this.image = image;
-		this.categoryItem = categoryItem;
+		this.category = category;
 		this.isDisplay = isDisplay;
 		this.isStock = isStock;
 		this.discountPrice = discountPrice;
@@ -78,7 +78,7 @@ public class Product extends BaseTimeEntity {
 		this.name = product.getName();
 		this.description = product.getDescription();
 		this.image = product.getImage();
-		this.categoryItem = product.getCategoryItem();
+		this.category = product.getCategory();
 
 		this.options.clear();
 		this.options.addAll(product.getOptions());

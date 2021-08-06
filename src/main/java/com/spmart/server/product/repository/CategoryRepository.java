@@ -8,4 +8,5 @@ import com.spmart.server.product.domain.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 	List<Category> findAllByOrderById();
+	List<Category> findAllByParentId(Long parentId);
 }

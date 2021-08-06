@@ -5,7 +5,9 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.Optional;
 
+import com.spmart.server.product.repository.CategoryRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,14 +26,12 @@ import org.springframework.data.domain.Pageable;
 import com.spmart.server.common.dto.PageDto;
 import com.spmart.server.common.dto.PageResponse;
 import com.spmart.server.product.domain.Category;
-import com.spmart.server.product.domain.CategoryItem;
 import com.spmart.server.product.domain.OptionValue;
 import com.spmart.server.product.domain.Product;
 import com.spmart.server.product.domain.ProductOption;
 import com.spmart.server.product.dto.ProductCard;
 import com.spmart.server.product.dto.ProductDetail;
 import com.spmart.server.product.dto.ProductRequest;
-import com.spmart.server.product.repository.CategoryItemRepository;
 import com.spmart.server.product.repository.ProductRepository;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,7 +41,7 @@ class ProductServiceTest {
 	private ProductRepository productRepository;
 
 	@Mock
-	private CategoryItemRepository categoryItemRepository;
+	private CategoryRepository categoryRepository;
 
 	@Spy
 	private ModelMapper modelMapper;
@@ -63,7 +63,7 @@ class ProductServiceTest {
 			.code("남405-2")
 			.name("원목 니켈스카시상패")
 			.image("asdfdsa")
-			.categoryItem(CategoryItem.builder().id(3L).build()) // fk
+			.category(Category.builder().id(3L).build()) // fk
 			.isDisplay(true)
 			.isStock(true)
 			.price(10000)
@@ -74,14 +74,14 @@ class ProductServiceTest {
 			.code("남405-2")
 			.name("야호")
 			.image("asdfdsa")
-			.categoryItem(CategoryItem.builder().id(4L).build()) // fk
+			.category(Category.builder().id(4L).build()) // fk
 			.isDisplay(true)
 			.isStock(true)
 			.price(10000)
 			.discountPrice(5000)
 			.build();
 
-		when(productRepository.findAllByCategoryItemId(Mockito.anyLong(), Mockito.any(Pageable.class)))
+		when(productRepository.findAllByCategoryId(Mockito.anyLong(), Mockito.any(Pageable.class)))
 			.thenReturn(new PageImpl(
 				Arrays.asList(product1, product2),
 				PageRequest.of(1, 2), 3));
@@ -89,7 +89,7 @@ class ProductServiceTest {
 		PageDto pageDto = new PageDto(1, 2, 0);
 		PageResponse<ProductCard> response = productService.getProductCardList(1L, pageDto);
 
-		verify(productRepository).findAllByCategoryItemId(eq(1L), Mockito.any(Pageable.class));
+		verify(productRepository).findAllByCategoryId(eq(1L), Mockito.any(Pageable.class));
 
 		Assertions.assertThat(response.getPageNumber()).isEqualTo(1);
 		Assertions.assertThat(response.getPageSize()).isEqualTo(2);
@@ -119,7 +119,7 @@ class ProductServiceTest {
 
 		Category category = Category.builder().name("금속").build();
 
-		CategoryItem item1 = CategoryItem.builder().category(category).name("동 상패").build();
+		Category item1 = Category.builder().parent(category).name("동 상패").build();
 
 		Product product1 = Product.builder()
 			.id(1L)
@@ -127,7 +127,7 @@ class ProductServiceTest {
 			.name("원목 니켈스카시상패")
 			.image("asdfdsa")
 			.description("description")
-			.categoryItem(item1)
+			.category(item1)
 			.isDisplay(true)
 			.isStock(true)
 			.price(10000)
@@ -159,7 +159,7 @@ class ProductServiceTest {
 	@Test
 	@DisplayName("상품 등록하기")
 	public void registProduct() {
-		CategoryItem categoryItem = CategoryItem.builder()
+		Category categoryItem = Category.builder()
 			.id(1L)
 			.name("카테고리 이름")
 			.build();
@@ -178,7 +178,7 @@ class ProductServiceTest {
 			.code("남405-2")
 			.name("원목 니켈스카시상패")
 			.description("description")
-			.categoryItem(categoryItem)
+			.category(categoryItem)
 			.image("test")
 			.isDisplay(true)
 			.isStock(true)
@@ -194,19 +194,19 @@ class ProductServiceTest {
 		when(productRepository.save(Mockito.any(Product.class)))
 			.thenReturn(product);
 
-		when(categoryItemRepository.existsById(Mockito.anyLong()))
+		when(categoryRepository.existsById(Mockito.anyLong()))
 			.thenReturn(true);
 
 		productService.registProduct(productRequest);
 
 		verify(productRepository).save(Mockito.any(Product.class));
-		verify(categoryItemRepository).existsById(Mockito.anyLong());
+		verify(categoryRepository).existsById(Mockito.anyLong());
 	}
 
 	@Test
 	@DisplayName("상품 등록하기 실패한 경우")
 	public void registProductFail() {
-		CategoryItem categoryItem = CategoryItem.builder()
+		Category categoryItem = Category.builder()
 			.name("카테고리 이름")
 			.build();
 
@@ -223,7 +223,7 @@ class ProductServiceTest {
 			.code("남405-2")
 			.name("원목 니켈스카시상패")
 			.image("asdfdsa")
-			.categoryItem(categoryItem)
+			.category(categoryItem)
 			.isDisplay(true)
 			.isStock(true)
 			.price(10000)
@@ -233,18 +233,20 @@ class ProductServiceTest {
 		ProductRequest productRequest = modelMapper.map(product, ProductRequest.class);
 
 		when(productRepository.save(Mockito.any(Product.class)))
-			.thenReturn(Mockito.any(Product.class));
+			.thenReturn(product);
 
-		when(categoryItemRepository.save(Mockito.any(CategoryItem.class)))
-			.thenReturn(Mockito.any(CategoryItem.class));
+		when(categoryRepository.save(Mockito.any(Category.class)))
+			.thenReturn(categoryItem);
 
-		productService.registProduct(productRequest);
+		Assert.assertThrows(IllegalArgumentException.class, () ->
+				productService.registProduct(productRequest)
+		);
 	}
 
 	@Test
 	@DisplayName("상품정보 업데이트")
 	public void updateProduct() {
-		CategoryItem categoryItem = CategoryItem.builder()
+		Category categoryItem = Category.builder()
 			.id(1L)
 			.name("카테고리 이름")
 			.build();
@@ -263,7 +265,7 @@ class ProductServiceTest {
 			.code("남405-2")
 			.name("원목 니켈스카시상패")
 			.description("description")
-			.categoryItem(categoryItem)
+			.category(categoryItem)
 			.image("test")
 			.isDisplay(true)
 			.isStock(true)

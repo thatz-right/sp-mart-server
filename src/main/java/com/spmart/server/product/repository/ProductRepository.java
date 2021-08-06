@@ -8,5 +8,5 @@ import com.spmart.server.product.domain.Product;
 import com.spmart.server.product.dto.ProductCard;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-	Page<Product> findAllByCategoryItemId(Long categoryItemId, Pageable pageable);
+	Page<Product> findAllByCategoryId(Long categoryId, Pageable pageable);
 }
