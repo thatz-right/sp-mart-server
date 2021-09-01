@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,4 +15,6 @@ import lombok.ToString;
 @ToString
 public class CategoryInfo {
 	private String name;
+	private CategoryInfo parent;
+	private List<CategoryInfo> children;
 }
