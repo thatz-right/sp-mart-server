@@ -85,7 +85,7 @@ class ProductServiceTest {
 				Arrays.asList(product1, product2),
 				PageRequest.of(1, 2), 3));
 
-		PageResponse<ProductCard> response = productService.getProductCardList(1L, 1);
+		PageResponse<ProductCard> response = productService.getListByCategory(1L, 1);
 
 		verify(productRepository).findAllByCategoryId(eq(1L), Mockito.any(Pageable.class));
 
@@ -138,7 +138,7 @@ class ProductServiceTest {
 		when(productRepository.findById(Mockito.anyLong()))
 			.thenReturn(Optional.of(product1));
 
-		ProductDetail productDetail = productService.getProductDetail(1L);
+		ProductDetail productDetail = productService.getDetail(1L);
 		System.out.println(productDetail);
 		verify(productRepository).findById(eq(1L));
 
@@ -195,7 +195,7 @@ class ProductServiceTest {
 		when(categoryRepository.existsById(Mockito.anyLong()))
 			.thenReturn(true);
 
-		productService.registProduct(productRequest);
+		productService.save(productRequest);
 
 		verify(productRepository).save(Mockito.any(Product.class));
 		verify(categoryRepository).existsById(Mockito.anyLong());
@@ -237,7 +237,7 @@ class ProductServiceTest {
 			.thenReturn(categoryItem);
 
 		Assert.assertThrows(IllegalArgumentException.class, () ->
-				productService.registProduct(productRequest)
+				productService.save(productRequest)
 		);
 	}
 
@@ -281,7 +281,7 @@ class ProductServiceTest {
 		when(productRepository.save(Mockito.any(Product.class)))
 			.thenReturn(Mockito.any(Product.class));
 
-		productService.updateProduct(productRequest);
+		productService.update(productRequest);
 
 		verify(productRepository).save(Mockito.any(Product.class));
 		verify(productRepository).findById(Mockito.anyLong());

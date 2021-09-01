@@ -22,4 +22,5 @@ public enum StatusCode {
 	private final HttpStatus httpStatus;
 	private final String code;
 	private final String message;
+
 }

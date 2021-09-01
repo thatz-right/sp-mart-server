@@ -4,6 +4,8 @@ import com.spmart.server.product.domain.Category;
 import com.spmart.server.product.domain.Product;
 import lombok.*;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -13,15 +15,31 @@ import java.util.List;
 @ToString
 public class ProductRequest {
     private Long id;
+
+    @NotBlank
     private String code;
+
+    @NotBlank
     private String name;
+
     private String description;
+
+    @NotBlank
     private String image;
+
+    @NotBlank
     private Long categoryId;
+
     private boolean isDisplay;
+
     private boolean isStock;
+
     private List<OptionInfo> options;
+
+    @Min(0)
     private int discountPrice;
+
+    @Min(0)
     private int price;
 
     public Product toEntity() {
@@ -32,7 +50,11 @@ public class ProductRequest {
                 .description(description)
                 .image(image)
                 .category(Category.builder().id(categoryId).build())
-                .isDisplay(isDisplay).isStock(isStock).discountPrice(discountPrice).price(price).build();
+                .isDisplay(isDisplay)
+                .isStock(isStock)
+                .discountPrice(discountPrice)
+                .price(price)
+                .build();
 
         for (OptionInfo optionInfo : options) {
             product.addProductOption(optionInfo.toEntity());

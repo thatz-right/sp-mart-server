@@ -1,21 +1,19 @@
 package com.spmart.server.product.service;
 
-import org.springframework.stereotype.Service;
-
 import com.spmart.server.common.dto.PageResponse;
 import com.spmart.server.product.dto.ProductCard;
 import com.spmart.server.product.dto.ProductDetail;
 import com.spmart.server.product.dto.ProductRequest;
 
-@Service
 public interface ProductService {
-	PageResponse<ProductCard> getProductCardList(Long categoryId, int pageNum);
 
-	ProductDetail getProductDetail(Long productId);
+    PageResponse<ProductCard> getListByCategory(Long categoryId, int pageNum);
 
-	void registProduct(ProductRequest productRequest);
+    ProductDetail getDetail(Long productId);
 
-	void updateProduct(ProductRequest productRequest);
+    void save(ProductRequest productRequest);
 
-	void removeProduct(Long productId);
+    void update(ProductRequest productRequest);
+
+    void remove(Long productId);
 }
