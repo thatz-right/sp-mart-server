@@ -7,13 +7,18 @@ import com.spmart.server.product.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+
+    @Override
+    public List<CategoryInfo> getListTopNode(Long parentId) {
+        return null;
+    }
 
     @Override
     public void save(CategoryRequest categoryRequest) {

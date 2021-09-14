@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class CategoryInfo {
+	private Long id;
 	private String name;
 	private CategoryInfo parent;
 	private List<CategoryInfo> children;

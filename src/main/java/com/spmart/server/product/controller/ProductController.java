@@ -55,7 +55,7 @@ public class ProductController {
                 .body(new StatusMessage(StatusCode.SUCCESS));
     }
 
-    @DeleteMapping("/{categoryId}")
+    @DeleteMapping("/{productId}")
     public ResponseEntity<StatusMessage> remove(@PathVariable Long productId) {
         productService.remove(productId);
         return ResponseEntity
