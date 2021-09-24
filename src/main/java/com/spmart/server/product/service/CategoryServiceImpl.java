@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.spmart.server.product.domain.Category;
 import com.spmart.server.product.dto.CategoryInfo;
@@ -33,6 +34,9 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public void save(CategoryRequest categoryRequest) {
 		Category category = categoryRequest.toEntity();
+
+		System.out.println(category.getParent());
+
 		categoryRepository.save(category);
 	}
 
@@ -42,12 +46,16 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void update(CategoryRequest categoryRequest) {
+	public void update(Long categoryId, CategoryRequest categoryRequest) {
 		Category category = categoryRepository
-			.findById(categoryRequest.getId())
+			.findById(categoryId)
 			.orElseThrow(IllegalArgumentException::new);
 
-		category.update(category);
+		if(category.getId() != categoryRequest.getId()){
+			throw new IllegalArgumentException();
+		}
+
+		category.update(categoryRequest.toEntity());
 
 		categoryRepository.save(category);
 	}

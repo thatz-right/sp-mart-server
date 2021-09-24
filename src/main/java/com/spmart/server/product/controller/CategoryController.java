@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spmart.server.common.dto.StatusMessage;
@@ -20,7 +21,8 @@ import com.spmart.server.product.service.CategoryService;
 
 import lombok.RequiredArgsConstructor;
 
-@RestController("/api/v1/category")
+@RestController
+@RequestMapping("/api/v1/categories")
 @RequiredArgsConstructor
 public class CategoryController {
 
@@ -46,7 +48,7 @@ public class CategoryController {
 	@PutMapping("/{categoryId}")
 	public ResponseEntity<StatusMessage> update(@PathVariable Long categoryId,
 		@RequestBody CategoryRequest categoryRequest) {
-		categoryService.update(categoryRequest);
+		categoryService.update(categoryId, categoryRequest);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)
@@ -56,7 +58,7 @@ public class CategoryController {
 	@DeleteMapping("/{categoryId}")
 	public ResponseEntity<StatusMessage> remove(@PathVariable Long categoryId) {
 		categoryService.remove(categoryId);
-       
+
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(new StatusMessage(StatusCode.SUCCESS));

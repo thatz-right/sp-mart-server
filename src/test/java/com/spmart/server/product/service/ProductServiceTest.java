@@ -281,7 +281,7 @@ class ProductServiceTest {
 		when(productRepository.save(Mockito.any(Product.class)))
 			.thenReturn(Mockito.any(Product.class));
 
-		productService.update(productRequest);
+		productService.update(1L, productRequest);
 
 		verify(productRepository).save(Mockito.any(Product.class));
 		verify(productRepository).findById(Mockito.anyLong());

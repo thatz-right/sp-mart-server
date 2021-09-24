@@ -16,6 +16,5 @@ import java.util.List;
 public class CategoryInfo {
 	private Long id;
 	private String name;
-	private CategoryInfo parent;
 	private List<CategoryInfo> children;
 }

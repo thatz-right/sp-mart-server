@@ -16,10 +16,13 @@ public class CategoryRequest {
     private Long parentId;
 
     public Category toEntity() {
-        return Category.builder()
-                .id(id)
-                .name(name)
-                .parent(Category.builder().id(parentId).build())
-                .build();
+        Category.CategoryBuilder cb = Category.builder().id(id).name(name);
+
+        if(parentId != null) {
+            cb.parent(Category.builder().id(parentId).build());
+        }
+
+        return cb.build();
     }
 }
+

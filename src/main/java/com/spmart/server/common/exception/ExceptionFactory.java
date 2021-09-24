@@ -8,7 +8,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 
 public enum ExceptionFactory {
 	METHOD_ARGUMNET_NOT_VALID(MethodArgumentNotValidException.class, StatusCode.INVALID_PARAMETER),
-	MISSONG_REQUEST_PARAMETER(MissingServletRequestParameterException.class, StatusCode.MISSING_PARAMETER),
+	MISSING_REQUEST_PARAMETER(MissingServletRequestParameterException.class, StatusCode.MISSING_PARAMETER),
 	HTTP_METHOD_NOT_SUPPORTED(HttpRequestMethodNotSupportedException.class, StatusCode.INVALID_METHOD),
 	// NOT_EXIST_ELEMENT(NotExistException.class, StatusCode.NO_SUCH_ELEMENT),
 	// NOT_AUTHORIZED(AuthException.class, StatusCode.UNAUTHORIZED_USER),

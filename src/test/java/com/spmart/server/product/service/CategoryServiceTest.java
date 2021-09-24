@@ -89,7 +89,7 @@ class CategoryServiceTest {
         when(categoryRepository.save(Mockito.any(Category.class)))
                 .thenReturn(Mockito.any(Category.class));
 
-        categoryService.update(categoryRequest);
+        categoryService.update(1L, categoryRequest);
 
         verify(categoryRepository).save(Mockito.any(Category.class));
         verify(categoryRepository).findById(Mockito.anyLong());
