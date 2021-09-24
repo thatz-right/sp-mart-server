@@ -29,6 +29,10 @@ public class CategoryTest {
         Category item2 = Category.builder().parent(parent).name("은 상패").build();
         Category item3 = Category.builder().parent(parent).name("금 상패").build();
 
+        item1.addParent(parent);
+        item2.addParent(parent);
+        item3.addParent(parent);
+
         categoryRepository.saveAll(Arrays.asList(item1, item2, item3));
 
         Category category = categoryRepository.findById(parent.getId()).orElseThrow();
@@ -49,6 +53,10 @@ public class CategoryTest {
         Category item1 = Category.builder().parent(category).name("동 상패").build();
         Category item2 = Category.builder().parent(category).name("은 상패").build();
         Category item3 = Category.builder().parent(category).name("금 상패").build();
+
+        item1.addParent(category);
+        item2.addParent(category);
+        item3.addParent(category);
 
         categoryRepository.saveAll(Arrays.asList(item1, item2, item3));
 

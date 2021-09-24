@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.spmart.server.product.domain.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-	List<Category> findAllByOrderById();
 	Optional<Category> findById(Long id);
 	List<Category> findAllByParentIdIsNull();
 }
