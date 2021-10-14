@@ -26,16 +26,28 @@ public class Order extends BaseTimeEntity {
 	private User user;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<OrderProduct> orderProducts;
+	private List<OrderProduct> orderProducts = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 
+	public int getTotalPrice() {
+		return orderProducts.stream().mapToInt(item -> item.getTotalPrice()).sum();
+	}
+
+	public void addOrderProduct(OrderProduct orderProduct) {
+		orderProducts.add(orderProduct);
+		orderProduct.setOrder(this);
+	}
+
+	public void setOrderStatus(OrderStatus status) {
+		this.orderStatus = status;
+	}
+
 	@Builder
-	public Order(Long id, User user, List<OrderProduct> orderProducts, OrderStatus orderStatus) {
+	public Order(Long id, User user, OrderStatus orderStatus) {
 		this.id = id;
 		this.user = user;
-		this.orderProducts = orderProducts != null ? orderProducts : new ArrayList<>();
 		this.orderStatus = orderStatus != null ? orderStatus : OrderStatus.PAYED;
 	}
 }

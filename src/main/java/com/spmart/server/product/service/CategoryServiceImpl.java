@@ -1,12 +1,10 @@
 package com.spmart.server.product.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.spmart.server.product.domain.Category;
 import com.spmart.server.product.dto.CategoryInfo;

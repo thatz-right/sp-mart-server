@@ -20,7 +20,6 @@ public class OrderProduct extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private int orderPrice;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	private Product product;
@@ -34,7 +33,7 @@ public class OrderProduct extends BaseTimeEntity {
 
 	private String title;
 
-	private LocalDate date;
+	private LocalDate receivedDate;
 
 	private String receiver;
 
@@ -42,18 +41,29 @@ public class OrderProduct extends BaseTimeEntity {
 
 	private String content;
 
+	private int productPrice;
+
+	public int getTotalPrice() {
+		return count * productPrice;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
 	@Builder
-	public OrderProduct(Long id, int orderPrice, Product product, Order order, int count, String title,
-		LocalDate date, String receiver, String gifter, String content) {
+	public OrderProduct(Long id, Product product, Order order, int count, String title,
+		LocalDate receivedDate, String receiver, String gifter, String content) {
 		this.id = id;
-		this.orderPrice = orderPrice;
 		this.product = product;
 		this.order = order;
 		this.count = count;
 		this.title = title;
-		this.date = date;
+		this.receivedDate = receivedDate;
 		this.receiver = receiver;
 		this.gifter = gifter;
 		this.content = content;
+		this.productPrice = product.getDiscountPrice();
 	}
+
 }

@@ -71,7 +71,6 @@ class OrderTest {
 
 		Order order = Order.builder()
 			.user(user)
-			.orderProducts(new ArrayList<>())
 			.build();
 
 		orderRepository.save(order);
@@ -80,6 +79,8 @@ class OrderTest {
 			.order(order)
 			.count(2)
 			.build();
+
+		order.addOrderProduct(orderProduct);
 
 		OrderProduct savedOrderProduct = orderProductRepository.save(orderProduct);
 
