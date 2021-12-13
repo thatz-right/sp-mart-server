@@ -3,6 +3,7 @@ package com.spmart.server.order.domain;
 import com.spmart.server.auth.domain.User;
 import com.spmart.server.common.BaseTimeEntity;
 
+import com.spmart.server.product.domain.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,11 +44,14 @@ public class Order extends BaseTimeEntity {
 	public void setOrderStatus(OrderStatus status) {
 		this.orderStatus = status;
 	}
-
 	@Builder
 	public Order(Long id, User user, OrderStatus orderStatus) {
 		this.id = id;
 		this.user = user;
 		this.orderStatus = orderStatus != null ? orderStatus : OrderStatus.PAYED;
+	}
+
+	public void changeOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 }
